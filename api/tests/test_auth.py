@@ -110,6 +110,5 @@ class JWTAuthenticationTestCase(TestCase):
         """Test accessing protected endpoint without token"""
         response = self.client.get(reverse('status-list'))
 
-        # Should still work since we have AllowAny in settings
-        # If you want to test with authentication required, change this
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Should return 401 since endpoints are protected
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

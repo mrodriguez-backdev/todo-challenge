@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -12,6 +13,10 @@ class StatusGetTestCase(TestCase):
         """Set up test data"""
         self.client = APIClient()
         self.url = reverse('status-list')
+
+        # Create and authenticate user
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.client.force_authenticate(user=self.user)
 
         # Create test status records
         self.status1 = StatusModel.objects.create(
